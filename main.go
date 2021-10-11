@@ -1,5 +1,7 @@
 package main
 
+import "github.com/andiahmads/bangking-service/app"
+
 func main() {
-	Start()
+	app.Start()
 }
