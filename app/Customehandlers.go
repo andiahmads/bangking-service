@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/andiahmads/bangking-service/errs"
+	"github.com/andiahmads/bangking-service/helpers"
 	"github.com/andiahmads/bangking-service/service"
 	"github.com/gorilla/mux"
 )
@@ -15,9 +15,11 @@ type CustomerHandlers struct {
 
 func (ch *CustomerHandlers) getAllCustomer(w http.ResponseWriter, r *http.Request) {
 
-	customers, err := ch.service.GetAllCustomer()
+	status := r.URL.Query().Get("status")
+
+	customers, err := ch.service.GetAllCustomer(status)
 	if err != nil {
-		writeResponse(w, http.StatusInternalServerError, errs.NewUnexpectedError("Unxepected Error").AsMessage())
+		writeResponse(w, http.StatusInternalServerError, helpers.NewUnexpectedError("Unxepected Error").AsMessage())
 	} else {
 		writeResponse(w, http.StatusOK, customers)
 	}
